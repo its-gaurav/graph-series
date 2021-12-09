@@ -15,9 +15,14 @@ class Solution {
         
         return false;
     }
-    
+    /**
+     * Since graph is undirected, so for given vertices (a,b)
+     * Edge exists from a->b as well as b->a. But this cannot be considered a cycle
+     * Hence taking Pair(from,to) that tells we are going from `from` to `to`
+     * 
+     */
     boolean detectCycleUsingBFS(int i, boolean[] vis, ArrayList<ArrayList<Integer>> adj){
-        Queue<Pair> queue = new LinkedList<>();
+        Queue<Pair> queue = new LinkedList<>(); // BFS
         queue.add(new Pair(-1, i));
         vis[i] = true; 
         while(!queue.isEmpty()){
@@ -29,9 +34,11 @@ class Solution {
                 if(!vis[node]){
                     queue.add(new Pair(to, node));
                     vis[node] = true;
-                }else if(node != from){  // if node is visited
+                }else{ // if node is visited
+                    if(node != from){  // if it is not the same vertex
                         return true;
-                }
+                    }
+                } 
             }
         }
         return false;
